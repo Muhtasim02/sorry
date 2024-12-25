@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apology Animation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+      animation: backgroundChange 16s infinite;  /* Background color change every 4 seconds */
+    }
+
+    /* Keyframes for background color change */
+    @keyframes backgroundChange {
+      0% {
+        background: #0a1e3c;  /* Dark Blue */
+      }
+      25% {
+        background: #1b3b64;  /* Medium Blue */
+      }
+      50% {
+        background: #186399;  /* Lighter Blue */
+      }
+      75% {
+        background: #20517c;  /* Even Lighter Blue */
+      }
+      100% {
+        background: #0a1e3c;  /* Dark Blue */
+      }
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* "SORRY" in ash color at the top-left corner */
+    .sorry-text {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #B0B0B0;  /* Ash color */
+      letter-spacing: 5px;
+    }
+
+    /* Red Heart positioned on the opposite side */
+    .heart {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 120px;  /* Increased width */
+      height: 120px; /* Increased height */
+      background-color: red;
+      clip-path: polygon(50% 0%, 0% 35%, 50% 100%, 100% 35%);  /* Heart shape */
+      animation: beat 2s infinite, colorChange 8s infinite;
+      transform-origin: center;
+    }
+
+    /* Heart beat animation */
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Color change animation for the heart */
+    @keyframes colorChange {
+      0% {
+        background-color: rgb(43, 109, 114);
+      }
+      25% {
+        background-color: rgb(20, 47, 48);
+      }
+      50% {
+        background-color: rgb(2, 49, 151);
+      }
+      75% {
+        background-color: rgb(9, 9, 185);
+      }
+      100% {
+        background-color: rgb(34, 80, 78);
+      }
+    }
+
+    /* Time section with spacing */
+    .time {
+      font-size: 2rem;
+      margin-top: 80px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Apology (Letter Style) */
+    .apology-container {
+      width: 60%;
+      max-width: 600px;
+      margin-top: 30px;
+      display: none; /* Hidden by default */
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      transition: max-height 1s ease, padding 1s ease;
+      max-height: 0;
+      overflow: hidden;
+    }
+
+    .apology-container.open {
+      display: block;
+      max-height: 500px;
+      padding: 20px;
+    }
+
+    .apology {
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+
+    /* Button styling with ash black color */
+    .msg-button {
+      background-color: #9ebdc5; /* Ash black */
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background-color 0.3s ease;
+    }
+
+    .msg-button:hover {
+      background-color: #333333; /* Darker ash black on hover */
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
+      .sorry-text {
+        font-size: 2rem;
+        top: 10px;
+        left: 10px;
+      }
+
+      .heart {
+        width: 100px;
+        height: 100px;
+        top: 10px;
+        right: 10px;
+      }
+
+      .time {
+        font-size: 1.5rem;
+        margin-top: 40px;
+      }
+
+      .msg-button {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+
+      .apology-container {
+        width: 80%;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sorry-text {
+        font-size: 1.5rem;
+      }
+
+      .heart {
+        width: 80px;
+        height: 80px;
+      }
+
+      .time {
+        font-size: 1.2rem;
+      }
+
+      .msg-button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+
+      .apology-container {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- "SORRY" Text in Ash color -->
+    <div class="sorry-text">SORRY MEGHLA</div>
+
+    <!-- Red Heart on the opposite side (right) -->
+    <div class="heart"></div>
+
+    <!-- Time section -->
+    <div class="time" id="time">TIME: --:--:--</div>
+
+    <!-- Button to trigger apology message -->
+    <button class="msg-button" id="msg-button">MSG</button>
+
+    <!-- Apology Letter (hidden initially) -->
+    <div class="apology-container" id="apology-container">
+      <div class="apology">
+        Dear Meghla,<br>
+        I am very sorry. Now I can understand my faults,<br>
+        but it's too late.<br>
+        Don't know if I can meet you anymore.<br>
+        Wherever you are, be safe.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Update time dynamically
+    function updateTime() {
+      const timeElement = document.getElementById('time');
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      timeElement.textContent = `TIME: ${timeString}`;
+    }
+
+    // Update time every second
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Toggle the apology letter opening when the "MSG" button is clicked
+    const msgButton = document.getElementById('msg-button');
+    const apologyContainer = document.getElementById('apology-container');
+
+    msgButton.addEventListener('click', () => {
+      apologyContainer.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
+
+
+
+
